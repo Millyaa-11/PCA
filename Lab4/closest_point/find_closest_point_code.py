@@ -1,7 +1,6 @@
 import random
 import matplotlib.pyplot as plt
 import timeit
-import keyboard
 
 class Point:
     def __init__(self, x_init, y_init):
