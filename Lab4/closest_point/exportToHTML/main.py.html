@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">random</span>
+<span class="s0">import </span><span class="s1">matplotlib.pyplot </span><span class="s0">as </span><span class="s1">plt</span>
+
+<span class="s0">class </span><span class="s1">Point:</span>
+    <span class="s0">def </span><span class="s1">__init__(self</span><span class="s0">, </span><span class="s1">x_init</span><span class="s0">, </span><span class="s1">y_init):</span>
+        <span class="s1">self.x = x_init</span>
+        <span class="s1">self.y = y_init</span>
+
+    <span class="s0">def </span><span class="s1">get_x(self):</span>
+        <span class="s0">return </span><span class="s1">self.x</span>
+
+    <span class="s0">def </span><span class="s1">get_y(self):</span>
+        <span class="s0">return </span><span class="s1">self.y</span>
+
+    <span class="s0">def </span><span class="s1">__repr__(self):</span>
+        <span class="s0">return </span><span class="s2">&quot;&quot;</span><span class="s1">.join([</span><span class="s2">&quot;(&quot;</span><span class="s0">, </span><span class="s1">str(self.x)</span><span class="s0">, </span><span class="s2">&quot;,&quot;</span><span class="s0">, </span><span class="s1">str(self.y)</span><span class="s0">, </span><span class="s2">&quot;)&quot;</span><span class="s1">])</span>
+
+    <span class="s0">def </span><span class="s1">__str__(self):</span>
+        <span class="s0">return </span><span class="s2">&quot;(%s,%s)&quot; </span><span class="s1">% (self.x</span><span class="s0">, </span><span class="s1">self.y)</span>
+
+    <span class="s0">def </span><span class="s1">distance(self):</span>
+        <span class="s1">totalDiff = []</span>
+        <span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(len(PointLst)):</span>
+            <span class="s1">totalDiff.append((abs(</span><span class="s3">0 </span><span class="s1">- lstX[i])) + (abs(</span><span class="s3">0 </span><span class="s1">- lstY[i])))</span>
+        <span class="s0">return </span><span class="s1">totalDiff</span>
+
+    <span class="s0">def </span><span class="s1">findClosest(self</span><span class="s0">, </span><span class="s1">totalDiff</span><span class="s0">, </span><span class="s1">lstX</span><span class="s0">, </span><span class="s1">lstY):</span>
+        <span class="s1">closest = </span><span class="s3">1000</span>
+        <span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(len(totalDiff)):</span>
+            <span class="s0">if </span><span class="s1">totalDiff[i] &lt; closest:</span>
+                <span class="s1">closestX = lstX[i]</span>
+                <span class="s1">closestY = lstY[i]</span>
+                <span class="s1">closest = totalDiff[i]</span>
+            <span class="s0">else</span><span class="s1">:</span>
+                <span class="s1">print(</span><span class="s2">&quot;There is no closest point&quot;</span><span class="s1">)</span>
+        <span class="s0">return </span><span class="s1">closestX</span><span class="s0">, </span><span class="s1">closestY</span>
+
+
+<span class="s1">PointLst = []</span>
+<span class="s1">lstX = []</span>
+<span class="s1">lstY = []</span>
+<span class="s1">p = []</span>
+
+<span class="s0">def </span><span class="s1">start():</span>
+    <span class="s1">n = int(input(</span><span class="s2">&quot;Input number of points : &quot;</span><span class="s1">))</span>
+    <span class="s0">try</span><span class="s1">:</span>
+        <span class="s0">if </span><span class="s1">n &gt; </span><span class="s3">1 </span><span class="s0">and </span><span class="s1">n &lt;= </span><span class="s3">12</span><span class="s1">:</span>
+            <span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range(n):</span>
+                <span class="s1">lstX.append(random.randint(-</span><span class="s3">400</span><span class="s0">, </span><span class="s3">400</span><span class="s1">))</span>
+                <span class="s1">lstY.append(random.randint(-</span><span class="s3">400</span><span class="s0">, </span><span class="s3">400</span><span class="s1">))</span>
+                <span class="s1">PointLst.append(Point(lstX[i]</span><span class="s0">, </span><span class="s1">lstY[i]))</span>
+                <span class="s1">plt.scatter(lstX</span><span class="s0">, </span><span class="s1">lstY</span><span class="s0">, </span><span class="s1">label=</span><span class="s2">&quot;stars&quot;</span><span class="s0">, </span><span class="s1">color=</span><span class="s2">&quot;black&quot;</span><span class="s1">)</span>
+                <span class="s1">totalDiff = PointLst[i].distance()</span>
+                <span class="s1">totalDiff[i].findClosest()</span>
+            <span class="s1">plt.xlabel(</span><span class="s2">&quot;X&quot;</span><span class="s1">)</span>
+            <span class="s1">plt.ylabel(</span><span class="s2">&quot;Y&quot;</span><span class="s1">)</span>
+            <span class="s1">plt.grid()</span>
+            <span class="s1">plt.show()</span>
+    <span class="s0">except </span><span class="s1">ValueError:</span>
+        <span class="s1">print(</span><span class="s2">&quot;Invalid! Please enter a number&quot;</span><span class="s1">)</span>
+
+<span class="s1">start()</span>
+</pre>
+</body>
+</html>
