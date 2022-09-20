@@ -18,9 +18,9 @@ class stack_class:
 
     def is_empty(self):
         if len(self.stack) == 0:
-            print("Empty Stack")
+            return True
         else:
-            print("Stack is not empty")
+            return False
 
     def size(self):
         print(len(self.stack))
@@ -39,6 +39,7 @@ class valet_park:
     def __init__(self):
         self.stack_a = stack_class()
         self.stack_b = stack_class()
+        self.stack_move = stack_class()
 
     def random_car(self):
         for i in range(3):
@@ -66,14 +67,27 @@ class valet_park:
         for i in range (len(self.stack_a.get_stack())):
             if self.stack_a.contains(input_car) == True:
                 if self.stack_a.peek() == input_car:
-                    print("Your car has been taken out")
                     print("\nSoi A - Number of Cars : ", len(self.stack_a.get_stack()), "\nNo. Plates : ",
                           self.stack_a.get_stack())
                     print("\nSoi B - Number of Cars : ", len(self.stack_b.get_stack()), "\nNo. Plates : ",
                           self.stack_b.get_stack())
-                    break
+                    self.stack_a.pop()
+                    print(self.stack_move.get_stack())
+                    while self.stack_b.contains(self.stack_move.peek()) == True:
+                          self.stack_a.push(self.stack_b.peek())
+                          self.stack_b.pop()
+                          if self.stack_move.is_empty == True:
+                              break
+                          else:
+                              self.stack_move.pop()
+                    print("\n", input_car, " has been taken out")
+                    print("\nSoi A - Number of Cars : ", len(self.stack_a.get_stack()), "\nNo. Plates : ",
+                          self.stack_a.get_stack())
+                    print("\nSoi B - Number of Cars : ", len(self.stack_b.get_stack()), "\nNo. Plates : ",
+                          self.stack_b.get_stack())
                 else:
                     self.stack_b.push(self.stack_a.peek())
+                    self.stack_move.push(self.stack_a.peek())
                     self.stack_a.pop()
             elif self.stack_b.contains(input_car) == True:
                 if self.stack_b.peek() == input_car:
