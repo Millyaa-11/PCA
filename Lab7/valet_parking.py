@@ -98,7 +98,7 @@ class valet_park:
                           self.stack_b.get_stack(), "\n")
                     self.stack_b.pop()
                     while self.stack_a.contains(self.stack_move.peek()) == True:
-                        self.stack_b.push(self.stack_b.peek())
+                        self.stack_b.push(self.stack_a.peek())
                         self.stack_a.pop()
                         self.stack_move.pop()
                         if self.stack_move.is_empty() == True:
