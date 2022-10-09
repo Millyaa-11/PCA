@@ -116,31 +116,22 @@ class UnorderedList:
                     # If current's data is greater than index's data, swap the data of current and next_cur
                     if current.score > cur_next.score:
                         temp = current.data
-                        print(current.score, "current1")
                         current.data = cur_next.data
                         cur_next.data = temp
                     cur_next = cur_next.next
-                    try:
-                        print(current.score,"current")
-                        print(current.next.score)
-                        print(cur_next.score, "cur_next")
-                    except:
-                        continue
                 current = current.next
 
 
-def start():
-    players_list = UnorderedList()
-    length = int(input("Enter number of players : "))
-    for i in range(length):
-        name = input("Input player's name : ")
-        score = int(input("Input player's score : "))
-        player = Node(name, score)
-        players_list.add(player.name, player.score)
-    players_list.print()
-    print("\n \nAfter")
-    players_list.sort_score()
-    players_list.print()
+players_list = UnorderedList()
+length = int(input("Enter number of players : "))
+for i in range(length):
+    name = input("Input player's name : ")
+    score = int(input("Input player's score : "))
+    player = Node(name, score)
+    players_list.add(player.name, player.score)
+players_list.print()
+print("\n \nAfter")
+players_list.sort_score()
+players_list.print()
 
 
-start()
