@@ -6,9 +6,6 @@ class Node:
         self.previous = None
         self.next = None
 
-    def get_name(self):
-        return self.name
-
 
 class SortList:
     # Represent the head and tail of the doubly linked list
@@ -70,7 +67,7 @@ class SortList:
         if self.head is None:
             print("List is empty")
             return
-        while current is not None:
+        while current is not None and current.data is not None:
             # Prints each node by incrementing pointer.
             print(current.data)
             current = current.next
@@ -81,14 +78,25 @@ class SortList:
             node = node.next
         if node == self.tail:
             node.data = None
+            node = None
         else:
             node.data = node.next.data
             node.next = node.next.next
-        return
+        return node
 
-    def update(self):
-        current = self.head
+    def update(self, element, up_score):
+        node = self.head
+        while node.name != element:
+            node = node.next
+        node.score = up_score
+        node.data = (element, up_score)
+        return node
 
+    def retrieve(self, element):
+        node = self.head
+        while node.name != element:
+            node = node.next
+        print(node.data)
 
 
 players_list = SortList()
@@ -106,7 +114,8 @@ players_list.display()
 print("Enter A to add new player's name and score\n"
       "Enter D to delete player's information\n"
       "Enter P to print scores\n"
-      "Enter U to update the score\n"
+      "Enter U to update the scores\n"
+      "Enter R to retrieve the scores\n"
       "Enter Q to exit\n")
 ans = input()
 if ans == "A":
@@ -124,6 +133,11 @@ if ans == "P":
     players_list.display()
 if ans == "U":
     update_name = input("Input player's name to update score : ")
-
-
-
+    update_score = input("Input player's score to update : ")
+    players_list.update(update_name, update_score)
+    players_list.display()
+if ans == "R":
+    ret_name = input("Input player's name to retrieve score : ")
+    players_list.retrieve(ret_name)
+if ans == "Q":
+    exit(1)
