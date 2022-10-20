@@ -24,8 +24,8 @@ def Depth(node):
 def TotalNodes(root):
     if root == None:
         return 0
-    lh = left_height(root)
-    rh = right_height(root)
+    lh = TotalNodes(root)
+    rh = TotalNodes(root)
     if lh == rh:
         return (1 << lh) - 1
     return 1 + TotalNodes(root.left) + TotalNodes(root.right)
