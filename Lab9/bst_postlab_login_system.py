@@ -8,7 +8,6 @@ users7_pass = []
 for i in range(len(users7)):
     users7_pass.append((users7[i].split(" ")))
 
-
 class Node:
     def __init__(self, username, password):
         self.username = username
@@ -52,6 +51,18 @@ class BST:
         if node.username == find_user:
             return True
         #  then recur on left subtree
+        left_nodes = self.__find_node(node.left, find_user)
+        if left_nodes:
+            return True
+        #  node is not found in left so recur on right subtree
+        right_nodes = self.__find_node(node.right, find_user)
+        return right_nodes
+
+    def find_account(self, node, find_user, find_pass):
+        if node is None:
+            return False
+        if node.data == (find_user, find_pass):
+            return True
         left_nodes = self.__find_node(node.left, find_user)
         if left_nodes:
             return True
@@ -158,27 +169,6 @@ class BST:
         else:
             return False
 
-    def preorder(self, node):
-        if node is None:
-            return
-        print(node.data)
-        self.preorder(node.left)
-        self.preorder(node.right)
-
-    def inorder(self, node):
-        if node is None:
-            return
-        self.inorder(node.left)
-        print(node.data)
-        self.inorder(node.right)
-
-    def postorder(self, node):
-        if node is None:
-            return
-        self.postorder(node.left)
-        self.postorder(node.right)
-        print(node.data)
-
     def print2D(self, root):
         self.print_tree(root, 0)
 
@@ -201,69 +191,90 @@ class BST:
         # Process left child
         self.print_tree(node.left, space)
 
+    def TotalNodes(self, node):
+        if node is None:
+            return 0
+        return 1 + self.TotalNodes(node.left) + self.TotalNodes(node.right)
+
+    def trim(self, btw, node):
+        # return if the key is not found in the tree
+        if node is None:
+            return
+        node.left = self.trim(btw, node.left)
+        node.right = self.trim(btw, node.right)
+        if node.username < btw[0]:
+            child_right = node.right
+            return child_right
+        elif node.username > btw[1]:
+            child_left = node.left
+            return child_left
+        return node
+
 
 def start_7():
+    i = 0
     tree = BST()
     for x in range(len(users7_pass)):
         tree.insert(Node(users7_pass[x][0], users7_pass[x][1]))
-    choice = input("print : P\n"
-                   "find user : F\n"
-                   "remove : R\n"
-                   "is empty? : E\n"
-                   "print preorder : PO\n"
-                   "print inorder : IO\n"
-                   "print postorder : SO\n")
-    if choice == "P":
+    choice = input("login : L\n"
+                   "count nodes : C\n"
+                   "trim : T\n")
+    if choice == "L":
+        user_in = input("Input your username : ")
+        pass_in = input("Input your password : ")
+        while i in range(3) and tree.find_account(tree.root, user_in, pass_in) is False:
+            print("Username doesn't exist\n")
+            user_in = input("Input your username :")
+            pass_in = input("Input your password : ")
+            i += 1
+        if tree.find_account(tree.root, user_in, pass_in) is False:
+            print("You have been removed")
+            exit(1)
+        else:
+            print("\nYou are now logged in")
+    elif choice == "C":
+        print(tree.TotalNodes(tree.root))
+    elif choice == "T":
+        min_name = input("Input the minimum username : ")
+        max_name = input("\nInput the maximum username : ")
+        btw = (min_name, max_name)
         tree.print2D(tree.root)
-    elif choice == "R":
+        tree.trim(btw, tree.root)
+        print("\n", "*" * 20, "After", "*" * 20)
         tree.print2D(tree.root)
-        tree.remove("gun")
-        print("\nAfter\n")
-        tree.print2D(tree.root)
-    elif choice == "F":
-        print(tree.find("panya"))
-    elif choice == "E":
-        tree.is_empty()
-    elif choice == "PO":
-        tree.preorder(tree.root)
-    elif choice == "IO":
-        tree.inorder(tree.root)
-    elif choice == "SO":
-        tree.postorder(tree.root)
-    else:
-        print("Invalid input")
 
 
 def start_1000():
+    i = 0
     tree = BST()
     for x in range(len(users1000_pass)):
         tree.insert(Node(users1000_pass[x][0], users1000_pass[x][1]))
-    choice = input("print : P\n"
-                   "find user : F\n"
-                   "remove : R\n"
-                   "is empty? : E\n"
-                   "print preorder : PO\n"
-                   "print inorder : IO\n"
-                   "print postorder : SO\n")
-    if choice == "P":
+    choice = input("login : L\n"
+                   "count nodes : C\n"
+                   "trim : T\n")
+    if choice == "L":
+        user_in = input("Input your username : ")
+        pass_in = input("Input your password : ")
+        while i in range(3) and tree.find_account(tree.root, user_in, pass_in) is False:
+            print("Username doesn't exist\n")
+            user_in = input("Input your username :")
+            pass_in = input("Input your password : ")
+            i += 1
+        if tree.find_account(tree.root, user_in, pass_in) is False:
+            print("You have been removed")
+            exit(1)
+        else:
+            print("\nYou are now logged in")
+    elif choice == "C":
+        print(tree.TotalNodes(tree.root))
+    elif choice == "T":
+        min_name = input("Input the minimum username : ")
+        max_name = input("\nInput the maximum username : ")
+        btw = (min_name, max_name)
         tree.print2D(tree.root)
-    elif choice == "R":
+        tree.trim(btw, tree.root)
+        print("\n", "*" * 20, "After", "*" * 20)
         tree.print2D(tree.root)
-        tree.remove("cat")
-        print("\nAfter\n")
-        tree.print2D(tree.root)
-    elif choice == "F":
-        print(tree.find("eve"))
-    elif choice == "E":
-        tree.is_empty()
-    elif choice == "PO":
-        tree.preorder(tree.root)
-    elif choice == "IO":
-        tree.inorder(tree.root)
-    elif choice == "SO":
-        tree.postorder(tree.root)
-    else:
-        print("Invalid input")
 
 
 start_7()
