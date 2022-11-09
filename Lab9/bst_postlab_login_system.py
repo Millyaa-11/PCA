@@ -63,11 +63,11 @@ class BST:
             return False
         if node.data == (find_user, find_pass):
             return True
-        left_nodes = self.__find_node(node.left, find_user)
+        left_nodes = self.find_account(node.left, find_user, find_pass)
         if left_nodes:
             return True
         #  node is not found in left so recur on right subtree
-        right_nodes = self.__find_node(node.right, find_user)
+        right_nodes = self.find_account(node.right, find_user, find_pass)
         return right_nodes
 
     def minValueNode(self, node):
@@ -216,19 +216,22 @@ def start_7():
     tree = BST()
     for x in range(len(users7_pass)):
         tree.insert(Node(users7_pass[x][0], users7_pass[x][1]))
+    tree.print2D(tree.root)
     choice = input("login : L\n"
                    "count nodes : C\n"
                    "trim : T\n")
     if choice == "L":
         user_in = input("Input your username : ")
         pass_in = input("Input your password : ")
-        while i in range(3) and tree.find_account(tree.root, user_in, pass_in) is False:
-            print("Username doesn't exist\n")
-            user_in = input("Input your username :")
+        while i in range(2) and tree.find_account(tree.root, user_in, pass_in) is False:
+            print("Username or password doesn't exist\n")
+            user_in = input("Input your username : ")
             pass_in = input("Input your password : ")
             i += 1
         if tree.find_account(tree.root, user_in, pass_in) is False:
-            print("You have been removed")
+            print("\nYou have been removed")
+            tree.remove(user_in)
+            tree.print2D(tree.root)
             exit(1)
         else:
             print("\nYou are now logged in")
@@ -241,6 +244,8 @@ def start_7():
         tree.print2D(tree.root)
         tree.trim(btw, tree.root)
         print("\n", "*" * 20, "After", "*" * 20)
+        if tree.root.username < btw[0] or tree.root.username > btw[1]:
+            tree.root = tree.remove(tree.root.username)
         tree.print2D(tree.root)
 
 
