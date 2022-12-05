@@ -56,7 +56,8 @@ class HASHTABLE:
             self.hash_table.append("")
         for x in range(len(self.hash_lst)):
             self.entry += 1
-            if self.entry > self.size:
+            self.load = self.entry / self.size
+            if self.load > 0.5:
                 self.entry = 0
                 self.size = self.prime(self.size * 2)
                 self.expand += 1
@@ -73,7 +74,6 @@ class HASHTABLE:
                     self.head = cur
                 new = Node(self.hash_lst[x][0], self.hash_lst[x][1])
                 cur.next = new
-            self.load = self.entry / self.size
         return [self.expand, self.load, self.collision]
 
     def clear(self):
