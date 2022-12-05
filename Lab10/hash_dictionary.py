@@ -8,6 +8,7 @@ full_dict = []
 for i in full:
     full_dict.append(i)
 
+
 class Node:
     def __init__(self, key, word):
         self.key = key
@@ -48,29 +49,24 @@ class HASHTABLE:
             self.hash_lst.append((self.hash(dicts[i]) % prime_size, dicts[i]))
         return self.hash_lst
 
-    def add(self, key, word):
-        num = Node(key, word)
-        num.next = self.head
-        self.head = num
-
     def separate(self, dicts):
+        self.clear()
+        self.collision = 0
         for x in range(len(self.hash_lst)):
             self.hash_table.append("")
         for x in range(len(self.hash_lst)):
             self.entry += 1
             if self.entry > self.size:
-                self.clear()
                 self.entry = 0
                 self.size = self.prime(self.size * 2)
                 self.expand += 1
                 self.separate(dicts)
-                break
-
             if self.hash_table[self.hash_lst[x][0]] == "":
                 self.head = Node(self.hash_lst[x][0], dicts[x])
                 self.hash_table[self.hash_lst[x][0]] = Node(self.hash_lst[x][0], dicts[x])
             else:
-                self.collision += 1
+                if self.expand > 4:
+                    self.collision += 1
                 cur = self.hash_table[self.hash_lst[x][0]]
                 while cur.next is not None:
                     cur = cur.next
